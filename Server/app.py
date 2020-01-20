@@ -9,7 +9,8 @@ from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/students/*": {"origins": "http://localhost:3000/"}})
+cors = CORS(app, resources={
+            r"/students/*": {"origins": "http://localhost:3000/"}})
 
 students = {
     "Hermione Granger": Student(0, "Hermione", "Granger", datetime.now().isoformat(), datetime.now().isoformat(), None, None, None).__dict__,
@@ -52,14 +53,14 @@ def show_student(student_name):
 def edit_student():
     global students
     payload = request.get_json()
-    student_name = payload["name"]   
+    student_name = payload["name"]
     list = payload["list"]
     skill_name = payload["skill"]
     if payload["action"] == "skills":
         students[student_name][list][skill_name] = payload["level"]
         print(students[student_name][list][skill_name])
         return f"Success! Skill changed: {skill_name}"
-    
+
     if payload["action"] == "remove-skill":
         students[student_name][list].pop(skill_name)
         print(students)
@@ -102,7 +103,8 @@ def add_student():
 
 
 if __name__ == "__main__":
-    threading.Thread(target=app.run(debug=True), kwargs=dict(threaded=True)).start()
+    threading.Thread(target=app.run(debug=True),
+                     kwargs=dict(threaded=True)).start()
     time.sleep(0.5)
     response = requests.get('http://127.0.0.1:5000')
     if response.status_code == 200:
