@@ -1,0 +1,13 @@
+body {
+  overflow-x: hidden;
+}
+
+.App {
+  /* text-align: center; */
+}
+
+.loader-fixed {
+  position: fixed!important;
+  left: 50%;
+  transform: translateX(-50%);
+}
